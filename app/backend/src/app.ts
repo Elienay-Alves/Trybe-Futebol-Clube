@@ -1,4 +1,11 @@
+import 'express-async-errors';
 import * as express from 'express';
+import errorHandler from './Middleware/err';
+
+import routerLogin from './Routes/Login';
+import routerTeam from './Routes/Team';
+import routerMatch from './Routes/Matches';
+import routerLeaderBoard from './Routes/LeaderBoard';
 
 class App {
   public app: express.Express;
@@ -22,6 +29,12 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
+    this.app.use('/login', routerLogin);
+    this.app.use('/teams', routerTeam);
+    this.app.use('/matches', routerMatch);
+    this.app.use('/leaderboard', routerLeaderBoard);
+
+    this.app.use(errorHandler);
   }
 
   public start(PORT: string | number):void {
